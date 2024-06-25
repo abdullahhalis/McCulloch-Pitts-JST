@@ -11,7 +11,7 @@
       const x3Inputs = document.getElementsByName('x3[]');
       const x4Inputs = document.getElementsByName('x4[]');
       const tInputs = document.getElementsByName('t[]');
-  
+
       switch (trainingDataValue) {
         case 'AND':
           x1Inputs[0].value = 1;
@@ -71,33 +71,31 @@
           break;
       }
     }
-  </script>
+</script>
 {% endblock %}
 
 {% block body %}
 <div class="container">
-    <h1>McCulloch-Pitts Training</h1>
+    <h1>McCulloch Pitts Training</h1>
     <form action="/" method="POST">
-        <div>
-            <h2>Training Data</h2>
-            <br />
+        <div class="form-group">
+            <label>Training Data Templates:</label>
+            <select id="training-data-select" onchange="handleTrainingDataChange()">
+                <option value="OR">OR</option>
+                <option value="NOR">NOR</option>
+                <option value="AND">AND</option>
+                <option value="NAND">NAND</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label>Weights:</label>
             <input type="number" name="weights" value="{{weight}}">
-            <label style="margin-left: 5px;">Threshold:</label>
-            <input type="number" name="threshold" value="{{threshold}}" min="0">
-            <br />
-            <br>
-            <label>Training Data Templates :</label>
-            <select id="training-data-select" onchange="handleTrainingDataChange()">
-                <option value="AND">AND</option>
-                <option value="OR">OR</option>
-                <option value="NAND">NAND</option>
-                <option value="NOR">NOR</option>
-            </select>
-            <br />
-            <br>
-    
         </div>
+        <div class="form-group">
+            <label>Threshold:</label>
+            <input type="number" name="threshold" value="{{threshold}}" min="0">
+        </div>
+        <h2>INPUT</h2>
         <table>
             <thead>
                 <tr>
@@ -130,11 +128,11 @@
             </tbody>
         </table>
         <br>
-        <button type="submit" style="width: fit-content;">TRAIN</button>
+        <button type="submit">TRAIN</button>
     </form>
 
     {% if net %}
-    <h2>Output</h2>
+    <h2>OUTPUT</h2>
     <table>
         <thead>
             <tr>
@@ -151,28 +149,28 @@
                 <td>{{x1[1]}}</td>
                 <td>{{net[0]}}</td>
                 <td>{{fnet[0]}}</td>
-                <td><p style="font-weight: bold;">{% if t[0] == fnet[0] %}VALID{% else %}TIDAK VALID{% endif %}</p></td>
+                <td><p class="{% if t[0] == fnet[0] %}valid{% else %}invalid{% endif %}">{% if t[0] == fnet[0] %}VALID{% else %}TIDAK VALID{% endif %}</p></td>
             </tr>
             <tr>
                 <td>{{x2[0]}}</td>
                 <td>{{x2[1]}}</td>
                 <td>{{net[1]}}</td>
                 <td>{{fnet[1]}}</td>
-                <td><p style="font-weight: bold;">{% if t[1] == fnet[1] %}VALID{% else %}TIDAK VALID{% endif %}</p></td>
+                <td><p class="{% if t[1] == fnet[1] %}valid{% else %}invalid{% endif %}">{% if t[1] == fnet[1] %}VALID{% else %}TIDAK VALID{% endif %}</p></td>
             </tr>
             <tr>
                 <td>{{x3[0]}}</td>
                 <td>{{x3[1]}}</td>
                 <td>{{net[2]}}</td>
                 <td>{{fnet[2]}}</td>
-                <td><p style="font-weight: bold;">{% if t[2] == fnet[2] %}VALID{% else %}TIDAK VALID{% endif %}</p></td>
+                <td><p class="{% if t[2] == fnet[2] %}valid{% else %}invalid{% endif %}">{% if t[2] == fnet[2] %}VALID{% else %}TIDAK VALID{% endif %}</p></td>
             </tr>
             <tr>
                 <td>{{x4[0]}}</td>
                 <td>{{x4[1]}}</td>
                 <td>{{net[3]}}</td>
                 <td>{{fnet[3]}}</td>
-                <td><p style="font-weight: bold;">{% if t[3] == fnet[3] %}VALID{% else %}TIDAK VALID{% endif %}</p></td>
+                <td><p class="{% if t[3] == fnet[3] %}valid{% else %}invalid{% endif %}">{% if t[3] == fnet[3] %}VALID{% else %}TIDAK VALID{% endif %}</p></td>
             </tr>
         </tbody>
     </table>
