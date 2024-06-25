@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>McCulloch-Pitts</title>
+<script>
+    function handleTrainingDataChange() {
+      const trainingDataSelect = document.getElementById('training-data-select');
+      const trainingDataValue = trainingDataSelect.value;
+      const x1Inputs = document.getElementsByName('x1[]');
+      const x2Inputs = document.getElementsByName('x2[]');
+      const x3Inputs = document.getElementsByName('x3[]');
+      const x4Inputs = document.getElementsByName('x4[]');
+      const tInputs = document.getElementsByName('t[]');
+  
+      switch (trainingDataValue) {
+        case 'AND':
+          x1Inputs[0].value = 1;
+          x1Inputs[1].value = 1;
+          x2Inputs[0].value = 1;
+          x2Inputs[1].value = 0;
+          x3Inputs[0].value = 0;
+          x3Inputs[1].value = 1;
+          x4Inputs[0].value = 0;
+          x4Inputs[1].value = 0;
+          tInputs[0].value = 1;
+          tInputs[1].value = 0;
+          tInputs[2].value = 0;
+          tInputs[3].value = 0;
+          break;
+        case 'OR':
+          x1Inputs[0].value = 1;
+          x1Inputs[1].value = 1;
+          x2Inputs[0].value = 1;
+          x2Inputs[1].value = 0;
+          x3Inputs[0].value = 0;
+          x3Inputs[1].value = 1;
+          x4Inputs[0].value = 0;
+          x4Inputs[1].value = 0;
+          tInputs[0].value = 1;
+          tInputs[1].value = 1;
+          tInputs[2].value = 1;
+          tInputs[3].value = 0;
+          break;
+        case 'NAND':
+          x1Inputs[0].value = 1;
+          x1Inputs[1].value = 1;
+          x2Inputs[0].value = 1;
+          x2Inputs[1].value = 0;
+          x3Inputs[0].value = 0;
+          x3Inputs[1].value = 1;
+          x4Inputs[0].value = 0;
+          x4Inputs[1].value = 0;
+          tInputs[0].value = 0;
+          tInputs[1].value = 1;
+          tInputs[2].value = 1;
+          tInputs[3].value = 1;
+          break;
+        case 'NOR':
+          x1Inputs[0].value = 1;
+          x1Inputs[1].value = 1;
+          x2Inputs[0].value = 1;
+          x2Inputs[1].value = 0;
+          x3Inputs[0].value = 0;
+          x3Inputs[1].value = 1;
+          x4Inputs[0].value = 0;
+          x4Inputs[1].value = 0;
+          tInputs[0].value = 0;
+          tInputs[1].value = 0;
+          tInputs[2].value = 0;
+          tInputs[3].value = 1;
+          break;
+      }
+    }
+  </script>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>McCulloch-Pitts Training</h1>
+    <form action="/" method="POST">
+        <div>
+            <h2>Training Data</h2>
+            <br />
+            <label>weights:</label>
+            <input type="number" name="weights" value="{{weight}}">
+            <label style="margin-left: 5px;">threshold:</label>
+            <input type="number" name="threshold" value="{{threshold}}" min="0">
+            <br />
+            <br>
+            <label>Training Data Templates:</label>
+            <select id="training-data-select" onchange="handleTrainingDataChange()">
+                <option value="AND">AND</option>
+                <option value="OR">OR</option>
+                <option value="NAND">NAND</option>
+                <option value="NOR">NOR</option>
+            </select>
+            <br />
+            <br>
+    
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>X1</th>
+                    <th>X2</th>
+                    <th>t</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" name="x1[]" value="{{x1[0]}}" /></td>
+                    <td><input type="number" name="x1[]" value="{{x1[1]}}" /></td>
+                    <td><input type="number" name="t[]" value="{{t[0]}}" /></td>
+                </tr>
+                <tr>
+                    <td><input type="number" name="x2[]" value="{{x2[0]}}" /></td>
+                    <td><input type="number" name="x2[]" value="{{x2[1]}}" /></td>
+                    <td><input type="number" name="t[]" value="{{t[1]}}" /></td>
+                </tr>
+                <tr>
+                    <td><input type="number" name="x3[]" value="{{x3[0]}}" /></td>
+                    <td><input type="number" name="x3[]" value="{{x3[1]}}" /></td>
+                    <td><input type="number" name="t[]" value="{{t[2]}}" /></td>
+                </tr>
+                <tr>
+                    <td><input type="number" name="x4[]" value="{{x4[0]}}" /></td>
+                    <td><input type="number" name="x4[]" value="{{x4[1]}}" /></td>
+                    <td><input type="number" name="t[]" value="{{t[3]}}" /></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" style="width: fit-content;">train</button>
+    </form>
+
+    {% if net %}
+    <h2>Output</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>X1</th>
+                <th>X2</th>
+                <th>net</th>
+                <th>f(net)</th>
+                <th>hasil</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{x1[0]}}</td>
+                <td>{{x1[1]}}</td>
+                <td>{{net[0]}}</td>
+                <td>{{fnet[0]}}</td>
+                <td><p style="font-weight: bold;">{% if t[0] == fnet[0] %}valid{% else %}tidak valid{% endif %}</p></td>
+            </tr>
+            <tr>
+                <td>{{x2[0]}}</td>
+                <td>{{x2[1]}}</td>
+                <td>{{net[1]}}</td>
+                <td>{{fnet[1]}}</td>
+                <td><p style="font-weight: bold;">{% if t[1] == fnet[1] %}valid{% else %}tidak valid{% endif %}</p></td>
+            </tr>
+            <tr>
+                <td>{{x3[0]}}</td>
+                <td>{{x3[1]}}</td>
+                <td>{{net[2]}}</td>
+                <td>{{fnet[2]}}</td>
+                <td><p style="font-weight: bold;">{% if t[2] == fnet[2] %}valid{% else %}tidak valid{% endif %}</p></td>
+            </tr>
+            <tr>
+                <td>{{x4[0]}}</td>
+                <td>{{x4[1]}}</td>
+                <td>{{net[3]}}</td>
+                <td>{{fnet[3]}}</td>
+                <td><p style="font-weight: bold;">{% if t[3] == fnet[3] %}valid{% else %}tidak valid{% endif %}</p></td>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}
