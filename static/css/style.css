@@ -14,6 +14,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+h1 {
+  text-align: center;
+}
+
 h1, h2 {
   /* text-align: center; */
   color: #333;
@@ -94,6 +98,10 @@ p.valid {
 p.invalid {
   color: red;
   font-weight: bold;
+}
+
+#training-data-select {
+  width: 660px;
 }
 
 @media (max-width: 600px) {

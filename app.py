@@ -9,17 +9,17 @@ def binary_activation(y, threshold=1):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-      weight = float(request.form.get('weights'))
+      weight = int(request.form.get('weights'))
       training_data_value = request.form.get('training-data-select')
       print(training_data_value)
       weights = np.array((weight, weight))
-      threshold = float(request.form.get('threshold'))
+      threshold = int(request.form.get('threshold'))
         
-      x1 = np.array([float(x) for x in request.form.getlist('x1[]')])
-      x2 = np.array([float(x) for x in request.form.getlist('x2[]')])
-      x3 = np.array([float(x) for x in request.form.getlist('x3[]')])
-      x4 = np.array([float(x) for x in request.form.getlist('x4[]')])
-      t = np.array([float(x) for x in request.form.getlist('t[]')])
+      x1 = np.array([int(x) for x in request.form.getlist('x1[]')])
+      x2 = np.array([int(x) for x in request.form.getlist('x2[]')])
+      x3 = np.array([int(x) for x in request.form.getlist('x3[]')])
+      x4 = np.array([int(x) for x in request.form.getlist('x4[]')])
+      t = np.array([int(x) for x in request.form.getlist('t[]')])
         
       net1 = np.dot(x1, weights)
       net2 = np.dot(x2, weights)
